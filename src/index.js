@@ -6,8 +6,9 @@ import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import { createBrowserHistory } from 'history'
-import { routerMiddleware, ConnectedRouter } from 'connected-react-router'
+import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { HashRouter } from 'react-router-dom'
 
 import routes from 'routes'
 import createRootReducer from 'reducers'
@@ -16,16 +17,16 @@ import createRootReducer from 'reducers'
 
 const history = createBrowserHistory()
 const middlewares = [thunk, routerMiddleware(history)]
-const store = createStore(
+const store = createStore( 
   createRootReducer(history),
   composeWithDevTools(applyMiddleware(...middlewares))
 )
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <HashRouter history={history}>
       {routes}
-    </ConnectedRouter>
+    </HashRouter>
   </Provider>,
   document.getElementById('root')
 )
